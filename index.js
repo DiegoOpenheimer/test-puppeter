@@ -45,7 +45,7 @@ const server = http.createServer(async (req, res) => {
     }
     if (url.includes('/run')) {
         const beforeCrawling = new Date();
-        await main();
+        main();
         const timeInSeconds = (new Date() - beforeCrawling) / 1000;
         res.end(`Crawling finished in ${timeInSeconds} seconds`);
     }
