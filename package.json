@@ -1,0 +1,22 @@
+{
+  "name": "test-puppeter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node .",
+    "start-delay": "node . --delay",
+    "start-persist": "node . --delay --persist",
+    "dev-delay": "node . --dev --delay",
+    "dev-persist": "node . --dev --persist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "convert-excel-to-json": "^1.7.0",
+    "moment": "^2.29.1",
+    "puppeteer": "^13.3.0"
+  }
+}
