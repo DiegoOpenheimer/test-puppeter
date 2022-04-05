@@ -42,14 +42,10 @@ const server = http.createServer(async (req, res) => {
     if (url.includes('/hello')) {
         res.end('Hello World!');
         return
-    }
-    if (url.includes('/run')) {
-        const beforeCrawling = new Date();
-        main();
-        const timeInSeconds = (new Date() - beforeCrawling) / 1000;
-        res.end(`Crawling finished in ${timeInSeconds} seconds`);
-    }
-
+    } 
 });
 
-server.listen(3000, () => console.log('Server running on port 3000'));
+server.listen(3000, () => {
+    console.log('Server running on port 3000');
+    main();
+});

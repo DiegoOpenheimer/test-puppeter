@@ -37,34 +37,45 @@ async function changeFilterDate(page, startDate, endDate) {
 
 export async function run(startDate, endDate, data) {
     console.log(`Consultando range de ${startDate} até ${endDate}`);
-    console.time('start');
     const browser = await puppeter.launch({
         headless: !dev,
         defaultViewport: null,
         executablePath: '/usr/bin/chromium-browser',
         args: ['--no-sandbox']
     });
+    console.log('Abrindo navegador');
     try {
+        console.log('Abrindo page');
         const page = await browser.newPage();
+        console.log('Aguardando configuração');
         await page._client.send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: `./${persist ? endDate.split('/').join('-') : ''}` })
+        console.log('Abrindo link');
         await page.goto(LINK);
+        console.log('Aguardando network');
         await page.waitForNetworkIdle();
+        console.log('Aguardando componente');
         await waitElementAndClick(page, 'div[data-tb-test-id="tabStoryPoint-4"]');
         await delay();
+        console.log('Aguardando network');
         await page.waitForNetworkIdle();
         await delay();
         await changeFilterDate(page, startDate, endDate);
         await delay();
         await page.waitForNetworkIdle();
         await delay();
+        console.log('Aguardando componente');
         await waitElementAndClick(page, '#download-ToolbarButton')
         await delay();
+        console.log('Aguardando componente');
         await waitElementAndClick(page, 'button[data-tb-test-id="DownloadCrosstab-Button"]')
         await delay();
+        console.log('Aguardando componente');
         await waitElementAndClick(page, 'div[data-tb-test-id="sheet-thumbnail-1"]')
         await delay();
+        console.log('Aguardando componente');
         await waitElementAndClick(page, 'button[data-tb-test-id="export-crosstab-export-Button"]')
         await delay();
+        console.log('Aguardando network');
         await page.waitForNetworkIdle();
         await extractData(endDate, data, persist);
     } catch (error) {
@@ -72,5 +83,4 @@ export async function run(startDate, endDate, data) {
     } finally {
         await browser.close();
     }
-    console.timeEnd('start');
 }
